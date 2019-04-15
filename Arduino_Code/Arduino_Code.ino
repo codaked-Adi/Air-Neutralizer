@@ -44,13 +44,13 @@ void loop() {
   Serial.println(analogSensor);
   Serial.print("Water Level: ");
   Serial.println(analogInPin);
-  Serial.println("Raw Signal Value (0-1023):");
+  Serial.print("Raw Signal Value (0-1023):");
   Serial.println(voMeasured);
 
-  Serial.println("Voltage:");
+  Serial.print("Voltage:");
   Serial.println(calcVoltage);
 
-  Serial.println("Dust Density:");
+  Serial.print("Dust Density:");
   Serial.println(dustDensity);
   // Checks if it has reached the threshold value
   if (val < 50)
