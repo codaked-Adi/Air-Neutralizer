@@ -1,4 +1,4 @@
-const int analogInPin = A0; // Analog input pin that the potentiometer is attached to of MQ2
+const int analogInPin = A0; // Analog input pin that the potentiometer is attachhed to
 int buzzer = 10;
 int smokeA0 = A4;
 int measurePin = A5;
@@ -40,8 +40,9 @@ void loop() {
     dustDensity = 0.00;
   }
  
-  Serial.print("Pin A0: ");
+  Serial.print("Harmful Gases: ");
   Serial.println(analogSensor);
+  Serial.print("Water Level: ");
   Serial.println(analogInPin);
   Serial.println("Raw Signal Value (0-1023):");
   Serial.println(voMeasured);
@@ -60,7 +61,7 @@ void loop() {
   {
     noTone(buzzer);
   }
-  delay(100);
+  delay(10000);
   
   
 }
