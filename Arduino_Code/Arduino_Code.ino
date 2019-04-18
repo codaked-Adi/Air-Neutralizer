@@ -1,8 +1,9 @@
-const int analogInPin = A0; // Analog input pin that the potentiometer is attachhed to
+int analogInPin = A0; 
 int buzzer = 10;
 int smokeA0 = A4;
 int measurePin = A5;
 int ledPower = 12;
+int pump=7;
 
 unsigned int samplingTime = 280;
 unsigned int deltaTime = 40;
@@ -18,6 +19,7 @@ int sensorThres = 250;
 void setup() {
   pinMode(buzzer, OUTPUT);
   pinMode(smokeA0, INPUT);
+  pinMode(7,OUTPUT);
   Serial.begin(9600);
   pinMode(ledPower,OUTPUT);
 }
@@ -31,10 +33,10 @@ void loop() {
   voMeasured = analogRead(measurePin);
 
   delayMicroseconds(deltaTime);
-  digitalWrite(ledPower,HIGH);
+  //digitalWrite(ledPower,HIGH);
   delayMicroseconds(sleepTime);
   calcVoltage = voMeasured*(5.0/1024);
-  dustDensity = 0.17*calcVoltage-0.1;
+  dustDensity = 0.5*calcVoltage-0.1;
   if ( dustDensity < 0)
   {
     dustDensity = 0.00;
@@ -43,7 +45,7 @@ void loop() {
   Serial.print("Harmful Gases: ");
   Serial.println(analogSensor);
   Serial.print("Water Level: ");
-  Serial.println(analogInPin);
+  Serial.println(val);
   Serial.print("Raw Signal Value (0-1023):");
   Serial.println(voMeasured);
 
@@ -53,15 +55,32 @@ void loop() {
   Serial.print("Dust Density:");
   Serial.println(dustDensity);
   // Checks if it has reached the threshold value
-  if (val < 50)
+  
+  if (val < 200)
   {
     tone(buzzer, 1000, 200);
+    
+  }
+  /*else
+  {
+    noTone(buzzer);
+  }*/
+  //digitalWrite(7,LOW);
+  if(dustDensity)
+  {
+    digitalWrite(7,LOW);
+  }
+  if (analogSensor > sensorThres)
+  {
+    tone(buzzer, 1000, 200);
+    digitalWrite(7,LOW);
+    delay(1000);
   }
   else
   {
-    noTone(buzzer);
+    digitalWrite(7,HIGH);
   }
-  delay(10000);
+  delay(1000);
   
   
 }
